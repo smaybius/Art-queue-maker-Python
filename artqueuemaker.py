@@ -1,4 +1,5 @@
 # GUI app for managing a list of links to send to the clipboard or archive.today. LGPL 3.0 or later license
+import os
 import tkinter as tk
 import pyperclip3 as pc
 import urllib.parse
@@ -55,6 +56,7 @@ def openfile():
         linkbox.insert('1.0', contents)
         linkbox.edit_modified(False)
         entry_text.set("")
+        window.title(os.path.abspath(file.name))
         file.close()
 
 def newfile():
