@@ -9,6 +9,8 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import scrolledtext
 
+oldtitle = "newqueue"
+
 def instruct():
     messagebox.showinfo(message='Send to: Moves the top link to the entry field and either copies it to clipboard for you to paste, or opens up a browser tab for archive.today to submit the given link.')
 
@@ -37,16 +39,20 @@ def on_closing():
         return
 
 def save():
-    f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", filetypes=[("Text files", ".txt")])
+    global oldtitle
+    f = filedialog.asksaveasfile(mode='w', defaultextension=".txt", filetypes=[("Text files", ".txt")], initialfile=oldtitle)
     if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
         return
     text2save = str(linkbox.get("1.0", "end-1c")) # starts from `1.0`, not `0.0`
     f.write(text2save)
+    
+    oldtitle = os.path.basename(f.name)
     f.close() # `()` was missing.
     linkbox.edit_modified(False)
     return True
 
 def openfile():
+    global oldtitle
     if confirmsaved() is True:
         file = filedialog.askopenfile(mode='rt', defaultextension=".txt", filetypes=[("Text files", ".txt")])
         if file is None: # asksaveasfile return `None` if dialog closed with "cancel".
@@ -57,6 +63,7 @@ def openfile():
         linkbox.edit_modified(False)
         entry_text.set("")
         window.title(os.path.abspath(file.name))
+        oldtitle = os.path.basename(file.name)
         file.close()
 
 def newfile():
@@ -80,6 +87,7 @@ def savefile():
 window = tk.Tk()
 window.geometry('')
 window.title("Art queue maker")
+
 window.resizable(True, True)
 window.columnconfigure(0, weight=1)
 window.rowconfigure(1, weight=1)
