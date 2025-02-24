@@ -7,7 +7,7 @@ from threading import Thread
 from time import sleep
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 
-import pyperclip3 as pc
+import pyperclip as pc
 
 oldtitle = "newqueue"
 
