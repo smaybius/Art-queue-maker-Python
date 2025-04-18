@@ -10,6 +10,7 @@ from tkinter import filedialog, messagebox, scrolledtext, ttk
 import pyperclip as pc
 
 oldtitle = "newqueue"
+currenttitle = "Art queue maker"
 
 
 def instruct():
@@ -63,6 +64,8 @@ def save():
     f.write(text2save)
 
     oldtitle = os.path.basename(f.name)
+    currenttitle = os.path.abspath(f.name)
+    window.title(currenttitle)
     f.close()  # `()` was missing.
     linkbox.edit_modified(False)
     return True
@@ -81,7 +84,8 @@ def openfile():
         linkbox.insert("1.0", contents)
         linkbox.edit_modified(False)
         entry_text.set("")
-        window.title(os.path.abspath(file.name))
+        currenttitle = os.path.abspath(file.name)
+        window.title(currenttitle)
         oldtitle = os.path.basename(file.name)
         file.close()
 
@@ -121,6 +125,16 @@ def autoarchive():
     thread = Thread(target = threadedarchive)
     thread.start()
     thread.join()
+
+def update_title():
+    """
+    Updates the title of the window to end with the number of lines in linkbox.
+    """
+    num_lines = int(linkbox.index('end-1c').split('.')[0])  # Get the number of lines
+    window.title(f"{currenttitle} ({num_lines} lines)")
+    window.after(500, update_title)  # Schedule this function to run again in 500ms
+
+
 
 window = tk.Tk()
 window.geometry("")
@@ -184,6 +198,9 @@ openbutton = ttk.Button(buttons_frame, text="Open", command=openfile).grid(
 savebutton = ttk.Button(buttons_frame, text="Save", command=savefile).grid(
     row=0, column=2, padx=(10), pady=10
 )
+
+# Call the update_title function during initialization
+update_title()
 
 window.protocol("WM_DELETE_WINDOW", on_closing)
 
