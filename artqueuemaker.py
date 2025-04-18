@@ -122,7 +122,6 @@ def autoarchive():
     thread.start()
     thread.join()
 
-
 window = tk.Tk()
 window.geometry("")
 window.title("Art queue maker")
@@ -161,7 +160,7 @@ sendmode.grid(column=1, row=0, padx=10, pady=12)
 tickvar = tk.IntVar(value=0)
 archivetick = ttk.Checkbutton(
     bottomframe,
-    text="Auto archive.today",
+    text="Auto archive.today in seconds:",
     variable=tickvar,
     onvalue=1,
     offvalue=0,
@@ -172,7 +171,7 @@ archivetick.grid(column=2, row=0, padx=10, pady=12)
 my_var = tk.StringVar(window)
 my_var.set("1")
 delayseconds = ttk.Spinbox(
-    bottomframe, from_=1, to=60, text="Delay (in s)", textvariable=my_var
+    bottomframe, from_=1, to=60, text="Delay (in s)", textvariable=my_var, width=2
 )
 delayseconds.grid(column=3, row=0, padx=10, pady=12)
 
