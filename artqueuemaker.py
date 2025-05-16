@@ -100,7 +100,7 @@ def sendline():
     if sendmode.current() == 0:
         pc.copy(linkbox.get("1.0", "1.0 + 1 lines"))
     elif sendmode.current() == 1:
-        webbrowser.open("https://archive.is/?run=1&url=" + urllib.parse.quote(linkbox.get("1.0", "1.0 + 1 lines"), safe="!~*'()"))
+        webbrowser.open("https://archive.is/submit/?url=" + urllib.parse.quote(linkbox.get("1.0", "1.0 + 1 lines"), safe="!~*'()"))
     elif sendmode.current() == 2:
         webbrowser.open("https://ghostarchive.org/search?term=" + urllib.parse.quote(linkbox.get(linkbox.get("1.0", "1.0 + 1 lines"), safe="!~*'()")))
     print(linkbox.get("1.0", "1.0 + 1 lines"))
@@ -114,7 +114,7 @@ def savefile():
 
 def threadedarchive():
     while tickvar.get() == 1 and len(linkbox.get("1.0", "end-1c")) != 0:
-        webbrowser.open("https://archive.is/?run=1&url=" + urllib.parse.quote(linkbox.get("1.0", "1.0 + 1 lines"), safe="!~*'()"))
+        webbrowser.open("https://archive.is/submit/?url=" + urllib.parse.quote(linkbox.get("1.0", "1.0 + 1 lines"), safe="!~*'()"))
         print(linkbox.get("1.0", "1.0 + 1 lines"))
         entry_text.set(linkbox.get("1.0", "1.0 + 1 lines"))
         linkbox.delete("1.0", "1.0 + 1 lines")
