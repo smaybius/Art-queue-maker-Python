@@ -7,11 +7,12 @@ from threading import Thread
 from time import sleep
 from tkinter import filedialog, messagebox, scrolledtext, ttk
 import traceback
+import random
 
 import pyperclip as pc
 
 oldtitle = "newqueue"
-currenttitle = "Art queue maker"
+currenttitle = "Bulk archive.today Sender"
 
 
 def instruct():
@@ -119,7 +120,7 @@ def threadedarchive():
         print(linkbox.get("1.0", "1.0 + 1 lines"))
         entry_text.set(linkbox.get("1.0", "1.0 + 1 lines"))
         linkbox.delete("1.0", "1.0 + 1 lines")
-        sleep(float(delayseconds.get()))
+        sleep(float(random.uniform(0.25, 1)))
     tickvar.set(0)
 
 def autoarchive():
@@ -169,13 +170,13 @@ sendbutton = ttk.Button(bottomframe, text="Send to:", command=sendline).grid(
 sm = tk.StringVar()
 sendmode = ttk.Combobox(bottomframe, width=16, textvariable=sm, state="readonly")
 sendmode["values"] = ("Clipboard (hold CTRL and press V to paste)", "archive.today", "ghostarchive")
-sendmode.current(0)
+sendmode.current(1)
 sendmode.grid(column=1, row=0, padx=10, pady=12)
 
 tickvar = tk.IntVar(value=0)
 archivetick = ttk.Checkbutton(
     bottomframe,
-    text="Auto archive.today in seconds:",
+    text="Auto archive.today after human verification",
     variable=tickvar,
     onvalue=1,
     offvalue=0,
@@ -185,10 +186,6 @@ archivetick.grid(column=2, row=0, padx=10, pady=12)
 
 my_var = tk.StringVar(window)
 my_var.set("1")
-delayseconds = ttk.Spinbox(
-    bottomframe, from_=1, to=60, text="Delay (in s)", textvariable=my_var, width=2
-)
-delayseconds.grid(column=3, row=0, padx=10, pady=12)
 
 newbutton = ttk.Button(buttons_frame, text="New file", command=newfile).grid(
     row=0, column=0, padx=(10), pady=10

@@ -1,4 +1,4 @@
-# Art queue maker (Python)
+# Bulk archive.today Sender (Python)
  Better version of the WPF/C# kind (https://github.com/AceOfSpadesProduc100/Art-Queue-Maker), made in Tkinter
 
 ![](preview1.png)
